@@ -1,5 +1,5 @@
-# denon-dev
-Denon development container based on latest node alpine container for testing puproses.
+# deno-dev
+[Deno](https://github.com/denoland/deno) development container based on latest [node alpine](https://github.com/nodejs/docker-node/tree/18ed56ea9ba03c16f48372927f5eb2553033e8de) container for testing puproses. [Denon](https://github.com/denosaurs/denon) is installed by default.
 
 Make sure to make the following directories in your CWD:
 *  persistent
