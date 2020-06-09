@@ -1,5 +1,9 @@
 FROM node:current-alpine
 
+# Setup global node directory
+RUN npm config set prefix "/srv/node"
+ENV PATH=/srv/node/bin:$PATH
+
 # Install GNU libc (aka glibc) and set C.UTF-8 locale as default.
 
 ENV LANG=C.UTF-8
