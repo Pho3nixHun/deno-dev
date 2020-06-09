@@ -1,5 +1,9 @@
 FROM node:current-alpine
 
+# Setup global node directory
+RUN npm config set prefix "/srv/node"
+ENV PATH=/srv/node/bin:$PATH
+
 # Install GNU libc (aka glibc) and set C.UTF-8 locale as default.
 
 ENV LANG=C.UTF-8
@@ -47,13 +51,12 @@ ENV DENO_VERSION=v1.0.5
 ENV DENO_BUILD_MODE=release
 ENV DENO_DIR=/srv/deno
 
-RUN apk add --virtual .download --no-cache curl \
+RUN apk add --no-cache curl \
  && curl -fsSL https://github.com/denoland/deno/releases/download/${DENO_VERSION}/deno-x86_64-unknown-linux-gnu.zip --output deno.zip \
  && unzip deno.zip \
  && rm deno.zip \
  && chmod 777 deno \
- && mv deno /bin/deno \
- && apk del .download
+ && mv deno /bin/deno
 
 WORKDIR ${DENO_DIR}
 WORKDIR /srv/persistent
@@ -68,5 +71,9 @@ ENV PATH=${PATH}:/root/.deno/bin
 # Install dev packages
 
 RUN deno install --allow-read --allow-run --allow-write -f --unstable https://deno.land/x/denon/denon.ts
+
+RUN curl -fsSL https://raw.githubusercontent.com/microsoft/vscode-dev-containers/v0.112.0/script-library/common-alpine.sh --output common-alpine.sh \
+    && sh common-alpine.sh true user 1001 1001 \
+    && rm common-alpine.sh
 
 ENTRYPOINT [ "sh" ]

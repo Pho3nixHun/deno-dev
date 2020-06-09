@@ -8,6 +8,8 @@ Make sure to make the following directories in your CWD:
     * Store your app here. Could be a git repository as well.
 *  deno
     * This is where Deno will store it's cache and installed packages, so you don't have to download them over and over again.
+* node
+    * This is where node will store global packages, so you don't have to install them over and over again.
 
 Bring it up with this simple ```docker-compose.yaml``` file:
 ```yaml
@@ -22,6 +24,7 @@ services:
             - "./persistent:/srv/persistent"
             - "./app:/srv/app"
             - "./deno:/srv/deno"
+            - "./node:/srv/node"
         stdin_open: true
         tty: true
 ```
